@@ -1,0 +1,262 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        body {
+            background-color: rgb(6, 1, 34);
+        }
+
+        #invoice {
+            width: 80%;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid grey;
+        }
+
+        button {
+            float: right;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        h3 {
+            text-align: Center;
+        }
+
+        img {
+            text-align: right;
+        }
+    </style>
+    <!-- html2pdf CDN link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <button id="download-button">Download as PDF</button>
+    <br><br>
+    <div id="invoice">
+        <img src="{% static 'images/logo1.png' %}" width="200px">
+        <h3>Tax Invoice</h3>
+        <table>
+            <tr>
+                <td><b>NAME</b> : {{bill.name}}</td>
+                <td><b>Invoice No : {{bill.InvoiceNo}}</td>
+                <td><b>Dated</b> : {{bill.Dated1}}</td>
+            </tr>
+            <tr>
+                <td>
+                    <b>GSTIN</b> : {{bill.GSTIN}}
+                </td>
+                <td>
+                    <b>UIN</b> : {{bill.UIN}}
+                </td>
+                <td><b>Other ref</b> : {{bill.OtherReference}}</td>
+
+                <!-- <td>Mode/Terms of payment : {{bill.ModeORtermsOfPayment}}</td> -->
+            </tr>
+            <tr>
+                <td><b>State Name</b> : {{bill.stateName1}}</td>
+                <!-- <td>Suppliers Ref : {{bill.SuppliersRef}}</td> -->
+                <td><b>Adress</b> : Foura Complex, Mavoor Rd, <br> opposite National Hospital,<br> Kozhikode, Kerala
+                    673001</td>
+                <td><b>Email</b> : {{bill.Email1}}</td>
+
+            </tr>
+        </table>
+        <br>
+        <table>
+            <tr>
+                <td>
+                    <b>Buyer </b>: <br> {{bill.Buyer}}
+                </td>
+                <td>
+                    {% if bill.GSTIN2 %}
+                    <b>GSTIN </b>:<br> {{bill.GSTIN2}}
+                    {% else %}
+                    <b>GSTIN </b>:
+                    {% endif %}
+                </td>
+                <td>
+                    <b>State</b> :<br>{{bill.stateName1}}
+                </td>
+                <td style="width: 150px;" colspan="2">
+                    <b>Adress</b> :<br> {{bill.adress}}
+                </td>
+                <td><b>Email :<br> </b>{{bill.Email2}}</td>
+                <td><b>Phone :<br> </b>{{bill.phone}}</td>
+            </tr>
+        </table>
+        <br>
+        <table>
+            <tr>
+                <td><b>SlNo</b></td>
+                <td>
+                    <b>Description of goods</b>
+                </td>
+                <td><b>HSN</b></td>
+                <td><b>SAC</b></td>
+                <td><b>Rate</b></td>
+                <td><b>Per</b></td>
+                <td><b>Disc</b></td>
+                <td><b>Amount</b></td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>{{bill.descriptionOfGoods}}</td>
+                <td>{{bill.HSN}}</td>
+                {% if bill.SAC %}
+                <td>{{bill.SAC}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if bill.Rate %}
+                <td>{{bill.Rate}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if bill.per %}
+                <td>{{bill.per}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if bill.disc %}
+                <td>{{bill.disc}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                <td>{{bill.amount1}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="right"><b>CGST</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{bill.CentralTax}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="right">
+                    <b>SGST</b>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{bill.StateTax}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="right"><b>Roundoff</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="right"><b>Total</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{bill.Total}}</td>
+            </tr>
+            <tr>
+                <td colspan="8"><b>Amount chargeable ( in words ) </b>: {{bill.words}} rupees only</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td rowspan="2"><b>HSN/SAC</b></td>
+                <td rowspan="2"><b>taxable Value</b></td>
+                <td colspan="2"><b>Central tax</b></td>
+                <!-- <td></td> -->
+                <td colspan="2"><b>State tax</b></td>
+                <!-- <td></td> -->
+                <td rowspan="2">
+                    <b>Total
+                        <br>
+                        tax amount
+                    </b>
+                </td>
+            </tr>
+            <tr>
+                <!-- <td></td> -->
+                <!-- <td></td> -->
+                <td><b>Rate</b></td>
+                <td><b>Amount</b></td>
+                <td><b>Amount</b></td>
+                <td><b>Amount</b></td>
+                <!-- <td></td> -->
+            </tr>
+            <tr>
+                <td>{{bill.HSN}}</td>
+                <td></td>
+                <td>9%</td>
+                <td>{{bill.CentralTax}}</td>
+                <td>9%</td>
+                <td>{{bill.StateTax}}</td>
+                <td>{{bill.total_tax}}</td>
+            </tr>
+
+            <tr>
+                <td colspan="7"><b>Tax amount ( in words ) : </b>{{bill.tax_words}} rupees only</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <b>Declaration</b>
+                    <br>
+                    we declare that invoice shows the actual price of the goods described and that all particalicars are
+                    true
+                </td>
+                <td colspan="4">
+                    <b>for name :</b>
+                    <br>
+                    <br>
+                    <b>Authorized signatory :</b>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        const button = document.getElementById('download-button');
+
+        function generatePDF() {
+            // Choose the element that your content will be rendered to.
+            const element = document.getElementById('invoice');
+            // Choose the element and save the PDF for your user.
+            html2pdf().from(element).save();
+        }
+
+        button.addEventListener('click', generatePDF);
+    </script>
+</body>
+
+</html>

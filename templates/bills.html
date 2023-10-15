@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <style>
+        body{
+            color:white;
+            background-color:rgb(6, 1, 34);
+        }
+        table{
+            width:100%;
+            border-collapse: collapse;
+        }
+        th,td{
+            border:1px solid white;
+            padding: 10px;
+        }
+        a{
+            color:white;
+            text-decoration: none;
+        }
+        li{
+            display: inline;
+            color: white;
+            font-weight: bold;
+            margin: 20px;
+        }
+        a{
+            color:white;
+            text-decoration: none;
+            font-weight:bold;
+        }
+        ul{
+            text-align:right;
+        }
+    </style>
+</head>
+<body>
+        <!-- navbar -->
+        <ul>
+            <li><a href="{% url 'form_view' %}">NEW BILL</a></li>
+            <li><a href="{% url 'bills' %}">OLD BILLS</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'userlogout' %}">LOGOUT</a></li>
+            {% endif %}
+        </ul>
+        <!-- navbar end  -->
+    <h3>Previous Bills</h3>
+    <table>
+        <tr>
+            <th>Invoice No</th>
+            <th>Date</th>
+            <th>Buyer</th>
+            <th>Amount</th>
+            <th></th>
+        </tr>
+        {% for bill in bills %}
+        <tr>
+            <td>{{bill.InvoiceNo}}</td>
+            <td>{{bill.Dated1}}</td>
+            <td>{{bill.Buyer}}</td>
+            <td>{{bill.Total}}</td>
+            <td><a href="{% url 'billview' bill.InvoiceNo %}">VIEW</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
