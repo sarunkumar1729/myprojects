@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -59,7 +58,7 @@
         <table>
             <tr>
                 <td><b>NAME</b> : {{bill.name}}</td>
-                <td><b>Invoice No : {{bill.InvoiceNo}}</td>
+                <td><b>Invoice No : {{bill.id}}</td>
                 <td><b>Dated</b> : {{bill.Dated1}}</td>
             </tr>
             <tr>
@@ -71,11 +70,9 @@
                 </td>
                 <td><b>Other ref</b> : {{bill.OtherReference}}</td>
 
-                <!-- <td>Mode/Terms of payment : {{bill.ModeORtermsOfPayment}}</td> -->
             </tr>
             <tr>
                 <td><b>State Name</b> : {{bill.stateName1}}</td>
-                <!-- <td>Suppliers Ref : {{bill.SuppliersRef}}</td> -->
                 <td><b>Adress</b> : Foura Complex, Mavoor Rd, <br> opposite National Hospital,<br> Kozhikode, Kerala
                     673001</td>
                 <td><b>Email</b> : {{bill.Email1}}</td>
@@ -207,13 +204,10 @@
                 </td>
             </tr>
             <tr>
-                <!-- <td></td> -->
-                <!-- <td></td> -->
                 <td><b>Rate</b></td>
                 <td><b>Amount</b></td>
                 <td><b>Amount</b></td>
                 <td><b>Amount</b></td>
-                <!-- <td></td> -->
             </tr>
             <tr>
                 <td>{{bill.HSN}}</td>
@@ -258,5 +252,4 @@
         button.addEventListener('click', generatePDF);
     </script>
 </body>
-
 </html>

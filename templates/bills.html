@@ -60,11 +60,11 @@
         </tr>
         {% for bill in bills %}
         <tr>
-            <td>{{bill.InvoiceNo}}</td>
+            <td>{{bill.id}}</td>
             <td>{{bill.Dated1}}</td>
             <td>{{bill.Buyer}}</td>
             <td>{{bill.Total}}</td>
-            <td><a href="{% url 'billview' bill.InvoiceNo %}">VIEW</a></td>
+            <td><a href="{% url 'billview' bill.id %}">VIEW</a></td>
         </tr>
         {% endfor %}
     </table>

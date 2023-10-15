@@ -7,8 +7,6 @@ from num2words import num2words
 
 # Create your views here.
 def index(request):
-    # b=bill_model.objects.all()
-    # b.delete()
     return render(request,'index.html')
 
 
@@ -30,6 +28,7 @@ def user_logout(request):
 def form_view(request):
     return render(request,'form.html')
 
+@login_required(login_url='userlogin')
 def form_submit(request):
     name=request.POST['name']
     GSTIN=request.POST['GSTIN']
@@ -59,10 +58,6 @@ def form_submit(request):
     # Replace this with your desired number
     words = num2words(Total)
     tax_words=num2words(CentralTax+StateTax)
-    print(words)
-
-    print(date1)
-    # print(date2)
     new_bill=bill_model(
         name=name,
         GSTIN=GSTIN,
@@ -78,7 +73,6 @@ def form_submit(request):
         stateName2=state2,
         ModeORtermsOfPayment=ModeORtermsOfPayment,
         OtherReference=otherreferance,
-        # Dated2=date2,
         descriptionOfGoods=description1,
         HSN=hsn1,
         SAC=sac1,
@@ -96,17 +90,20 @@ def form_submit(request):
     print('success')
     return redirect('pdfdownload')
 
+@login_required(login_url='userlogin')
 def pdf_download(request):
-    data=bill_model.objects.latest('created_at')
-    print(data)
-    return render(request,'pdfPage.html',{'bill':data})
-    # return redirect('index')
-
+    try:
+        data=bill_model.objects.latest('created_at')
+        return render(request,'pdfPage.html',{'bill':data})
+    except:
+        return render(request,'pdfPage.html')
+    
+@login_required(login_url='userlogin')
 def bills(request):
     bills=bill_model.objects.all()
     return render(request,'bills.html',{'bills':bills})
 
+@login_required(login_url='userlogin')
 def bill_view_pdf(request,i):
-    data=bill_model.objects.get(InvoiceNo=i)
-    print(data)
+    data=bill_model.objects.get(id=i)
     return render(request,'pdfPage.html',{'bill':data})

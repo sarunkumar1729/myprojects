@@ -3,7 +3,6 @@ from django.db import models
 # Create your models here.
 
 class bill_model(models.Model):
-    InvoiceNo=models.AutoField(primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True,null=True)
     name=models.CharField(max_length=255)
     GSTIN=models.CharField(max_length=255,null=True)
@@ -20,7 +19,6 @@ class bill_model(models.Model):
     stateName2=models.CharField(max_length=255,null=True)
     ModeORtermsOfPayment=models.CharField(max_length=255)
     OtherReference=models.CharField(max_length=255)
-    # Dated2=models.DateTimeField()
     descriptionOfGoods=models.CharField(max_length=255,null=True)
     HSN=models.CharField(max_length=255,null=True)
     SAC=models.CharField(max_length=255,null=True)
